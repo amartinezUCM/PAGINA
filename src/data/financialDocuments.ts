@@ -22,6 +22,7 @@ export const financialDocumentGroups: FinancialDocumentGroup[] = [
       { label: "Septiembre 2025", href: "https://drive.google.com/file/d/1wBmnqMxUmrCcjFFVnTlx0Nyp4a_Q91aA/view?usp=sharing" },
       { label: "Diciembre 2025", href: "https://drive.google.com/file/d/174N69bSL5KEilHOOaRldCYaG19vH6w7v/view?usp=sharing" },
       { label: "Marzo 2026", href: "https://drive.google.com/file/d/14uRGtyaqcvanBk-bq8UP9aZgfsywgsSd/view?usp=sharing" },
+      { label: "Junio 2026", href: "https://drive.google.com/file/d/1R2HLwxB60MkKUhae5Y4v1_YWn4W-wnrn/view?usp=sharing" },
     ],
   },
   {
@@ -46,6 +47,7 @@ export const financialDocumentGroups: FinancialDocumentGroup[] = [
       { label: "Septiembre 2025", href: "https://drive.google.com/file/d/1HRrrz_9G7btM_VgdLhiumeSOuiAUpKZw/view?usp=sharing" },
       { label: "Diciembre 2025", href: "https://drive.google.com/file/d/1TzxJpKC6na4Wu9MWi_GdLzOSYoI6czGX/view?usp=sharing" },
       { label: "Marzo 2026", href: "https://drive.google.com/file/d/1pwQRAW_H94kMbVQ5b2VkkKfCzaKCfHJ8/view?usp=sharing" },
+      { label: "Junio 2026", href: "https://drive.google.com/file/d/1POdbx3FQO_UdFPFSmAX572cF-RhH68lW/view?usp=sharing" },
     ],
   },
 ];
