@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import MexicanosUnidos from "../components/MexicanosUnidos.astro";
+import QuienesSomos from "../components/QuienesSomos.astro";
+import ThirtyOneYears from "../components/ThirtyOneYears.astro";
+import PorQueConfiar from "../components/PorQueConfiar.astro";
+import QueHacemos from "../components/QueHacemos";
+import Reviews from "../components/Reviews";
+import AddCampaign from "../components/AddCampaign.astro";
+import SeSocio from "../components/SeSocio.astro";
+---
+
+<Layout>
+  <Hero imageSrc="/img/hero.webp" />
+  <MexicanosUnidos />
+  <QuienesSomos />
+  <ThirtyOneYears />
+  <PorQueConfiar />
+  <QueHacemos client:visible />
+  <Reviews client:visible />
+  <AddCampaign />
+  <SeSocio />
+</Layout>

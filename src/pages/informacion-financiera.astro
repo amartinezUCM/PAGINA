@@ -1,0 +1,105 @@
+﻿---
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/sections/PageHero.astro";
+import CTABanner from "../components/sections/CTABanner.astro";
+import SectionLabel from "../components/ui/SectionLabel.astro";
+import { financialDocumentGroups } from "../data/financialDocuments";
+---
+
+<Layout
+  title="InforamciÃ³n Financiaera â€” UCM UniÃ³n de CrÃ©dito Mexicano"
+  description="Planes de ahorro disciplinado con rendimientos garantizados. Construye el patrimonio que mereces para el futuro que imaginas."
+>
+  <PageHero
+    title="Confiar es creer para creer, se necesita"
+    titleSerif="transparencia"
+    image="/img/hero.webp"
+  />
+
+  <section class="section-white my-20">
+    <div class="container-ucm text-center">
+      <p class="tracking-tight font-[500] text-sm uppercase mb-3">
+        LA TRANSPARENCIA COMIENZA CON ACCIONES, NO PALABRAS
+      </p>
+      <h2
+        class="font-medium text-[clamp(1.8rem,3.5vw,2.90rem)] text-[#0A0B1E] tracking-tighter leading-none mb-8"
+      >
+        Visita nuestra InformaciÃ³n{" "}<br />
+        <span class="serif-italic text-[clamp(2.1rem,4vw,3.5rem)]">
+          Financiera
+        </span>{" "}
+        en cualquier momento
+      </h2>
+    </div>
+  </section>
+
+  <section class="mb-30">
+    <!-- Columnas de documentos financieros -->
+    <div class="fin-grid container-ucm">
+      {
+        financialDocumentGroups.map((group, index) => (
+          <div class="fin-col reveal-up" style={`animation-delay: ${index * 0.12}s`}>
+            <h3 class="fin-col__title">
+              {group.title}
+              <br />
+              <span class="serif-italic">{group.titleSerif}</span>
+            </h3>
+            <div class="fin-col__links">
+              {group.documents.map((document) => (
+                <a
+                  href={document.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="fin-link"
+                >
+                  {document.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <CTABanner
+    label="Empieza hoy"
+    title="Tu futuro comienza con un"
+    titleSerif="primer paso"
+    description="Abre tu cuenta de ahorro UCM sin costo y empieza a construir el patrimonio que mereces. Tu asesor personal te guÃ­a en todo el proceso."
+    cta={{ label: "Abrir cuenta gratis", href: "/tienda" }}
+    ctaSecondary={{ label: "Consultar planes", href: "#planes" }}
+    variant="surface"
+    align="center"
+  />
+</Layout>
+
+<script>
+  document
+    .querySelectorAll<HTMLElement>(".reveal-up, .reveal-left, .reveal-right")
+    .forEach((el) => {
+      const isLeft = el.classList.contains("reveal-left");
+      const isRight = el.classList.contains("reveal-right");
+      el.style.opacity = "0";
+      el.style.transform = isLeft
+        ? "translateX(-30px)"
+        : isRight
+          ? "translateX(30px)"
+          : "translateY(24px)";
+      el.style.transition = "opacity 0.7s ease, transform 0.7s ease";
+      const obs = new IntersectionObserver(
+        ([e]) => {
+          if (e.isIntersecting) {
+            const d = parseFloat(el.style.animationDelay || "0") * 1000;
+            setTimeout(() => {
+              el.style.opacity = "1";
+              el.style.transform = "translate(0)";
+            }, d);
+            obs.disconnect();
+          }
+        },
+        { threshold: 0.1 },
+      );
+      obs.observe(el);
+    });
+</script>
