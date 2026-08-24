@@ -15,6 +15,7 @@ import FormModal from "./FormModal.astro";
     method="POST"
     target="_blank"
     novalidate
+    onsubmit="return true;"
   >
     <!-- Nombre Completo -->
     <div class="mf-field mf-field--full">
@@ -72,7 +73,7 @@ import FormModal from "./FormModal.astro";
       <label class="mf-label" for="ase-area">¿En qué área necesitas asesoría?</label>
       <div class="mf-select-wrap">
         <select class="mf-select" id="ase-area" name="entry.810389931" required>
-          <option value="" disabled selected></option>
+          <option value="" disabled selected>Selecciona una opción</option>
           <option value="Inversión a plazo fijo">Inversión a plazo fijo</option>
           <option value="Plan de ahorro">Plan de ahorro</option>
           <option value="Arrendamiento puro">Arrendamiento puro</option>
