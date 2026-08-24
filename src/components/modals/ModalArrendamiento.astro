@@ -7,7 +7,12 @@ import FormModal from "./FormModal.astro";
     <h2 id="modal-arrendamiento-title" class="mf-title">Arrendamiento Puro</h2>
   </div>
 
-  <form class="mf-form" name="modal-arrendamiento" method="POST" novalidate>
+  <form 
+    class="mf-form" 
+    id="form-arrendamiento"
+    name="modal-arrendamiento" 
+    novalidate
+  >
     <!-- Nombre Completo -->
     <div class="mf-field mf-field--full">
       <label class="mf-label" for="arr-nombre">Nombre completo</label>
@@ -15,7 +20,7 @@ import FormModal from "./FormModal.astro";
         class="mf-input"
         type="text"
         id="arr-nombre"
-        name="nombre"
+        name="entry.2014635999"
         autocomplete="name"
         required
       />
@@ -29,7 +34,7 @@ import FormModal from "./FormModal.astro";
           class="mf-input"
           type="text"
           id="arr-empresa"
-          name="empresa"
+          name="entry.1258605998"
           autocomplete="organization"
           required
         />
@@ -40,7 +45,7 @@ import FormModal from "./FormModal.astro";
           class="mf-input"
           type="tel"
           id="arr-telefono"
-          name="telefono"
+          name="entry.152808874"
           autocomplete="tel"
           required
         />
@@ -55,7 +60,7 @@ import FormModal from "./FormModal.astro";
           class="mf-input"
           type="email"
           id="arr-correo"
-          name="correo"
+          name="entry.1403491316"
           autocomplete="email"
           required
         />
@@ -66,7 +71,7 @@ import FormModal from "./FormModal.astro";
           class="mf-input"
           type="text"
           id="arr-valor"
-          name="valor"
+          name="entry.949183775"
           placeholder="Ej. $800,000"
         />
       </div>
@@ -76,13 +81,13 @@ import FormModal from "./FormModal.astro";
     <div class="mf-field mf-field--full">
       <label class="mf-label" for="arr-tipo">¿Qué tipo de bien deseas arrendar?</label>
       <div class="mf-select-wrap">
-        <select class="mf-select" id="arr-tipo" name="tipo" required>
-          <option value="" disabled selected></option>
-          <option value="vehiculo">Vehículo de carga / flotilla</option>
-          <option value="maquinaria">Maquinaria y equipo</option>
-          <option value="tecnologia">Tecnología / cómputo</option>
-          <option value="medico">Equipo médico</option>
-          <option value="otro">Otro</option>
+        <select class="mf-select" id="arr-tipo" name="entry.1679187103" required>
+          <option value="" disabled selected>Selecciona una opción</option>
+          <option value="Vehículo de carga / flotilla">Vehículo de carga / flotilla</option>
+          <option value="Maquinaria y equipo">Maquinaria y equipo</option>
+          <option value="Tecnología / cómputo">Tecnología / cómputo</option>
+          <option value="Equipo médico">Equipo médico</option>
+          <option value="Otro">Otro</option>
         </select>
         <svg class="mf-select-icon" width="16" height="16" viewBox="0 0 24 24"
           fill="none" stroke="currentColor" stroke-width="2.5"
@@ -98,7 +103,7 @@ import FormModal from "./FormModal.astro";
       <textarea
         class="mf-textarea"
         id="arr-mensaje"
-        name="mensaje"
+        name="entry.522175611"
         rows="4"
       ></textarea>
     </div>
@@ -109,4 +114,39 @@ import FormModal from "./FormModal.astro";
       </button>
     </div>
   </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('form-arrendamiento');
+      
+      if (form) {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          const formData = new FormData(form);
+          const url = 'https://docs.google.com/forms/d/e/1FAIpQLSfzDp-X86bVMgas9g-JJ2XxwSavKgpQ9IikVLu8lwBERH95KA/formResponse';
+          
+          try {
+            await fetch(url, {
+              method: 'POST',
+              body: formData,
+              mode: 'no-cors'
+            });
+            
+            alert('¡Gracias! Tu solicitud ha sido enviada correctamente. Un asesor UCM se pondrá en contacto pronto.');
+            
+            form.reset();
+            
+            const modal = form.closest('.ucm-modal');
+            if (modal) {
+              modal.setAttribute('hidden', '');
+            }
+          } catch (error) {
+            console.error('Error al enviar:', error);
+            alert('Hubo un error al enviar el formulario. Por favor, intenta de nuevo.');
+          }
+        });
+      }
+    });
+  </script>
 </FormModal>
