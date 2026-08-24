@@ -7,7 +7,12 @@ import FormModal from "./FormModal.astro";
     <h2 id="modal-credito-empresarial-title" class="mf-title">Crédito Empresarial</h2>
   </div>
 
-  <form class="mf-form" name="modal-credito-empresarial" method="POST" novalidate>
+  <form 
+    class="mf-form" 
+    id="form-credito-empresarial"
+    name="modal-credito-empresarial" 
+    novalidate
+  >
     <!-- Nombre Completo -->
     <div class="mf-field mf-field--full">
       <label class="mf-label" for="ce-nombre">Nombre completo</label>
@@ -15,7 +20,7 @@ import FormModal from "./FormModal.astro";
         class="mf-input"
         type="text"
         id="ce-nombre"
-        name="nombre"
+        name="entry.1136860981"
         autocomplete="name"
         required
       />
@@ -29,7 +34,7 @@ import FormModal from "./FormModal.astro";
           class="mf-input"
           type="text"
           id="ce-empresa"
-          name="empresa"
+          name="entry.1308983442"
           autocomplete="organization"
           required
         />
@@ -40,7 +45,7 @@ import FormModal from "./FormModal.astro";
           class="mf-input"
           type="tel"
           id="ce-telefono"
-          name="telefono"
+          name="entry.1724366045"
           autocomplete="tel"
           required
         />
@@ -55,7 +60,7 @@ import FormModal from "./FormModal.astro";
           class="mf-input"
           type="text"
           id="ce-monto"
-          name="monto"
+          name="entry.285676309"
           placeholder="Ej. $1,000,000"
         />
       </div>
@@ -65,7 +70,7 @@ import FormModal from "./FormModal.astro";
           class="mf-input"
           type="email"
           id="ce-correo"
-          name="correo"
+          name="entry.848312831"
           autocomplete="email"
           required
         />
@@ -76,14 +81,14 @@ import FormModal from "./FormModal.astro";
     <div class="mf-field mf-field--full">
       <label class="mf-label" for="ce-financiamiento">¿Qué tipo de financiamiento necesitas?</label>
       <div class="mf-select-wrap">
-        <select class="mf-select" id="ce-financiamiento" name="financiamiento" required>
-          <option value="" disabled selected></option>
-          <option value="capital-trabajo">Capital de trabajo</option>
-          <option value="expansion">Expansión / apertura de sucursal</option>
-          <option value="equipo">Adquisición de equipo</option>
-          <option value="inmueble">Compra de inmueble</option>
-          <option value="refinanciamiento">Refinanciamiento de deuda</option>
-          <option value="otro">Otro</option>
+        <select class="mf-select" id="ce-financiamiento" name="entry.1610242728" required>
+          <option value="" disabled selected>Selecciona una opción</option>
+          <option value="Capital de trabajo">Capital de trabajo</option>
+          <option value="Expansión / apertura de sucursal">Expansión / apertura de sucursal</option>
+          <option value="Adquisición de equipo">Adquisición de equipo</option>
+          <option value="Compra de inmueble">Compra de inmueble</option>
+          <option value="Refinanciamiento de deuda">Refinanciamiento de deuda</option>
+          <option value="Otro">Otro</option>
         </select>
         <svg class="mf-select-icon" width="16" height="16" viewBox="0 0 24 24"
           fill="none" stroke="currentColor" stroke-width="2.5"
@@ -99,7 +104,7 @@ import FormModal from "./FormModal.astro";
       <textarea
         class="mf-textarea"
         id="ce-mensaje"
-        name="mensaje"
+        name="entry.1399869152"
         rows="4"
       ></textarea>
     </div>
@@ -110,4 +115,39 @@ import FormModal from "./FormModal.astro";
       </button>
     </div>
   </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('form-credito-empresarial');
+      
+      if (form) {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          const formData = new FormData(form);
+          const url = 'https://docs.google.com/forms/d/e/1FAIpQLSefVDm1e7re2KuoyIaKET8tl2_Qf-ptlpz-BswnqijoGT5lPQ/formResponse';
+          
+          try {
+            await fetch(url, {
+              method: 'POST',
+              body: formData,
+              mode: 'no-cors'
+            });
+            
+            alert('¡Gracias! Tu solicitud ha sido enviada correctamente. Un asesor UCM se pondrá en contacto pronto.');
+            
+            form.reset();
+            
+            const modal = form.closest('.ucm-modal');
+            if (modal) {
+              modal.setAttribute('hidden', '');
+            }
+          } catch (error) {
+            console.error('Error al enviar:', error);
+            alert('Hubo un error al enviar el formulario. Por favor, intenta de nuevo.');
+          }
+        });
+      }
+    });
+  </script>
 </FormModal>
