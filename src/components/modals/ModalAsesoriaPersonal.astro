@@ -8,7 +8,14 @@ import FormModal from "./FormModal.astro";
     <p class="mf-subtitle">Un asesor UCM te contactará para guiarte sin compromiso</p>
   </div>
 
-  <form class="mf-form" name="modal-asesoria-personal" method="POST" novalidate>
+  <form 
+    class="mf-form" 
+    name="modal-asesoria-personal" 
+    action="https://docs.google.com/forms/d/e/1FAIpQLSeGHuYzfE6OlJ0ZdAH7gOTXUSNjukavGForkuNxOGAU6IY7sw/formResponse"
+    method="POST"
+    target="_blank"
+    novalidate
+  >
     <!-- Nombre Completo -->
     <div class="mf-field mf-field--full">
       <label class="mf-label" for="ase-nombre">Nombre completo</label>
@@ -16,7 +23,7 @@ import FormModal from "./FormModal.astro";
         class="mf-input"
         type="text"
         id="ase-nombre"
-        name="nombre"
+        name="entry.1234567890"
         autocomplete="name"
         required
       />
@@ -29,7 +36,7 @@ import FormModal from "./FormModal.astro";
         class="mf-input"
         type="text"
         id="ase-empresa"
-        name="empresa"
+        name="entry.1234567891"
         autocomplete="organization"
       />
     </div>
@@ -42,7 +49,7 @@ import FormModal from "./FormModal.astro";
           class="mf-input"
           type="email"
           id="ase-correo"
-          name="correo"
+          name="entry.1234567892"
           autocomplete="email"
           required
         />
@@ -53,7 +60,7 @@ import FormModal from "./FormModal.astro";
           class="mf-input"
           type="tel"
           id="ase-telefono"
-          name="telefono"
+          name="entry.1234567893"
           autocomplete="tel"
           required
         />
@@ -64,14 +71,12 @@ import FormModal from "./FormModal.astro";
     <div class="mf-field mf-field--full">
       <label class="mf-label" for="ase-area">¿En qué área necesitas asesoría?</label>
       <div class="mf-select-wrap">
-        <select class="mf-select" id="ase-area" name="area" required>
+        <select class="mf-select" id="ase-area" name="entry.1234567894" required>
           <option value="" disabled selected></option>
-          <option value="inversiones">Inversiones y rendimientos</option>
-          <option value="credito">Crédito empresarial o personal</option>
-          <option value="arrendamiento">Arrendamiento puro</option>
-          <option value="planeacion">Planeación financiera</option>
-          <option value="membresia">Membresía UCM</option>
-          <option value="otro">Otro</option>
+          <option value="Inversión a plazo fijo">Inversión a plazo fijo</option>
+          <option value="Plan de ahorro">Plan de ahorro</option>
+          <option value="Arrendamiento puro">Arrendamiento puro</option>
+          <option value="Crédito PyME">Crédito PyME</option>
         </select>
         <svg class="mf-select-icon" width="16" height="16" viewBox="0 0 24 24"
           fill="none" stroke="currentColor" stroke-width="2.5"
@@ -87,7 +92,7 @@ import FormModal from "./FormModal.astro";
       <textarea
         class="mf-textarea"
         id="ase-mensaje"
-        name="mensaje"
+        name="entry.1234567895"
         rows="4"
         placeholder="Cuéntanos brevemente tu situación o necesidad..."
       ></textarea>
