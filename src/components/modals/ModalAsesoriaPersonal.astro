@@ -10,12 +10,9 @@ import FormModal from "./FormModal.astro";
 
   <form 
     class="mf-form" 
+    id="form-asesoria-personal"
     name="modal-asesoria-personal" 
-    action="https://docs.google.com/forms/d/e/1FAIpQLSeGHuYzfE6OlJ0ZdAH7gOTXUSNjukavGForkuNxOGAU6IY7sw/formResponse"
-    method="POST"
-    target="_blank"
     novalidate
-    onsubmit="return true;"
   >
     <!-- Nombre Completo -->
     <div class="mf-field mf-field--full">
@@ -105,4 +102,42 @@ import FormModal from "./FormModal.astro";
       </button>
     </div>
   </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('form-asesoria-personal');
+      
+      if (form) {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          const formData = new FormData(form);
+          const url = 'https://docs.google.com/forms/d/e/1FAIpQLSeGHuYzfE6OlJ0ZdAH7gOTXUSNjukavGForkuNxOGAU6IY7sw/formResponse';
+          
+          try {
+            await fetch(url, {
+              method: 'POST',
+              body: formData,
+              mode: 'no-cors'
+            });
+            
+            // Mostrar mensaje de éxito
+            alert('¡Gracias! Tu solicitud ha sido enviada correctamente. Un asesor UCM se pondrá en contacto pronto.');
+            
+            // Limpiar formulario
+            form.reset();
+            
+            // Cerrar modal
+            const modal = form.closest('.ucm-modal');
+            if (modal) {
+              modal.setAttribute('hidden', '');
+            }
+          } catch (error) {
+            console.error('Error al enviar:', error);
+            alert('Hubo un error al enviar el formulario. Por favor, intenta de nuevo.');
+          }
+        });
+      }
+    });
+  </script>
 </FormModal>
