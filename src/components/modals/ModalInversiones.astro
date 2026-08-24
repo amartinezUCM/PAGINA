@@ -7,7 +7,12 @@ import FormModal from "./FormModal.astro";
     <h2 id="modal-inversiones-title" class="mf-title">Inversiones</h2>
   </div>
 
-  <form class="mf-form" name="modal-inversiones" method="POST" novalidate>
+  <form 
+    class="mf-form" 
+    id="form-inversiones"
+    name="modal-inversiones" 
+    novalidate
+  >
     <!-- Nombre Completo -->
     <div class="mf-field mf-field--full">
       <label class="mf-label" for="inv-nombre">Nombre completo</label>
@@ -15,7 +20,7 @@ import FormModal from "./FormModal.astro";
         class="mf-input"
         type="text"
         id="inv-nombre"
-        name="nombre"
+        name="entry.825956148"
         autocomplete="name"
         required
       />
@@ -28,7 +33,7 @@ import FormModal from "./FormModal.astro";
         class="mf-input"
         type="text"
         id="inv-empresa"
-        name="empresa"
+        name="entry.1417663245"
         autocomplete="organization"
       />
     </div>
@@ -41,7 +46,7 @@ import FormModal from "./FormModal.astro";
           class="mf-input"
           type="email"
           id="inv-correo"
-          name="correo"
+          name="entry.156483860"
           autocomplete="email"
           required
         />
@@ -52,7 +57,7 @@ import FormModal from "./FormModal.astro";
           class="mf-input"
           type="tel"
           id="inv-telefono"
-          name="telefono"
+          name="entry.426087315"
           autocomplete="tel"
           required
         />
@@ -67,20 +72,20 @@ import FormModal from "./FormModal.astro";
           class="mf-input"
           type="text"
           id="inv-monto"
-          name="monto"
+          name="entry.1534586561"
           placeholder="Ej. $500,000"
         />
       </div>
       <div class="mf-field">
         <label class="mf-label" for="inv-objetivo">¿Qué buscas principalmente?</label>
         <div class="mf-select-wrap">
-          <select class="mf-select" id="inv-objetivo" name="objetivo" required>
-            <option value="" disabled selected></option>
-            <option value="rendimiento">Mayor rendimiento</option>
-            <option value="seguridad">Seguridad y estabilidad</option>
-            <option value="liquidez">Liquidez</option>
-            <option value="diversificacion">Diversificación</option>
-            <option value="otro">Otro</option>
+          <select class="mf-select" id="inv-objetivo" name="entry.1083949299" required>
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option value="Mayor rendimiento">Mayor rendimiento</option>
+            <option value="Seguridad y estabilidad">Seguridad y estabilidad</option>
+            <option value="Liquidez">Liquidez</option>
+            <option value="Diversificación">Diversificación</option>
+            <option value="Otro">Otro</option>
           </select>
           <svg class="mf-select-icon" width="16" height="16" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="2.5"
@@ -97,7 +102,7 @@ import FormModal from "./FormModal.astro";
       <textarea
         class="mf-textarea"
         id="inv-mensaje"
-        name="mensaje"
+        name="entry.533818267"
         rows="4"
       ></textarea>
     </div>
@@ -108,4 +113,39 @@ import FormModal from "./FormModal.astro";
       </button>
     </div>
   </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('form-inversiones');
+      
+      if (form) {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          const formData = new FormData(form);
+          const url = 'https://docs.google.com/forms/d/e/1FAIpQLSdLWVJw75pC79vv_BPHIM8-R6uNyi5VUv_0lMRVRWZTZMzpWw/formResponse';
+          
+          try {
+            await fetch(url, {
+              method: 'POST',
+              body: formData,
+              mode: 'no-cors'
+            });
+            
+            alert('¡Gracias! Tu solicitud ha sido enviada correctamente. Un asesor UCM se pondrá en contacto pronto.');
+            
+            form.reset();
+            
+            const modal = form.closest('.ucm-modal');
+            if (modal) {
+              modal.setAttribute('hidden', '');
+            }
+          } catch (error) {
+            console.error('Error al enviar:', error);
+            alert('Hubo un error al enviar el formulario. Por favor, intenta de nuevo.');
+          }
+        });
+      }
+    });
+  </script>
 </FormModal>
