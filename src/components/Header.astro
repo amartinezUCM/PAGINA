@@ -36,9 +36,10 @@ const currentPath = Astro.url.pathname;
     </nav>
 
     <div class="site-header__actions">
+      <!-- Botón oculto en el frontend temporalmente (no se elimina el código) -->
       <a
         id="iniciar-sesion"
-        style="font-size:0.7rem; padding:0.6rem 1.4rem;"
+        style="font-size:0.7rem; padding:0.6rem 1.4rem; display:none;"
         href="https://miportal.creditomexicano.com.mx/"
         class="btn-primary"
         target="_blank"
@@ -62,10 +63,13 @@ const currentPath = Astro.url.pathname;
   <div id="mobile-menu" class="mobile-menu px-4" aria-hidden="true">
     <nav class="mobile-menu__nav space-y-4">
       {
+        // Evita renderizar el enlace "Iniciar Sesión" en el menú móvil
         navLinks.map((link) => (
-          <a href={link.href} class="mobile-menu__link">
-            {link.label}
-          </a>
+          link.label === "Iniciar Sesión" ? null : (
+            <a href={link.href} class="mobile-menu__link">
+              {link.label}
+            </a>
+          )
         ))
       }
       <button
