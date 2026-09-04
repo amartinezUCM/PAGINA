@@ -14,8 +14,10 @@ const currentYear = new Date().getFullYear();
           Los socios UCM tienen actualizaciones de promociones, servicios y
           eventos exclusivos de UCM. ¡Únete a nuestro Newsletter!
         </p>
-        <form class="flex mt-8 w-full" action="https://docs.google.com/forms/d/e/1FAIpQLSecFNR_7J2gtH4We4QZj63SzuXeXMWLyNgXlN73IbWVyHI7Cg/formResponse" method="POST" target="_blank">
+        <!-- Newsletter form: submit to Google Forms in a hidden iframe so the page does not navigate away -->
+        <form id="newsletter-form" class="flex mt-8 w-full" action="https://docs.google.com/forms/d/e/1FAIpQLSecFNR_7J2gtH4We4QZj63SzuXeXMWLyNgXlN73IbWVyHI7Cg/formResponse" method="POST" target="hidden_iframe" onsubmit="return handleNewsletterSubmit();">
           <input
+            id="newsletter-email"
             name="entry.1234373129"
             type="email"
             placeholder="Tu correo electrónico"
@@ -23,6 +25,7 @@ const currentYear = new Date().getFullYear();
             required
           />
           <button
+            id="newsletter-submit"
             type="submit"
             class="py-2 ml-1 bg-black/6 border border-none rounded-r-lg text-sm text-black/70 font-[500] cursor-pointer hover:bg-gold/80 transition-all duration-300 ease-in-out w-[28%]"
             aria-label="Suscribirse"
@@ -30,6 +33,18 @@ const currentYear = new Date().getFullYear();
             Suscríbete
           </button>
         </form>
+
+        <!-- Hidden iframe to receive the Google Forms response so the main page doesn't navigate -->
+        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+        <!-- Inline thank-you / status message -->
+        <div id="newsletter-status" style="display:none; margin-top:0.75rem;" class="text-sm font-medium text-green-600">
+          ¡Gracias! Tu registro fue recibido.
+        </div>
+        <div id="newsletter-error" style="display:none; margin-top:0.75rem;" class="text-sm font-medium text-red-600">
+          Ocurrió un error. Por favor inténtalo de nuevo más tarde.
+        </div>
+
       </div>
 
       <!-- Empresa -->
@@ -108,3 +123,64 @@ const currentYear = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<script>
+  // Newsletter submission handling: use hidden iframe to avoid navigation and show inline feedback
+  (function () {
+    const form = document.getElementById('newsletter-form');
+    const emailInput = document.getElementById('newsletter-email');
+    const submitBtn = document.getElementById('newsletter-submit');
+    const statusEl = document.getElementById('newsletter-status');
+    const errorEl = document.getElementById('newsletter-error');
+    const iframe = document.getElementById('hidden_iframe');
+    let timeoutId = null;
+
+    if (!form) return;
+
+    // When the iframe loads, consider the submission complete
+    iframe.addEventListener('load', () => {
+      // If we previously showed an error, ignore
+      clearTimeout(timeoutId);
+      statusEl.style.display = 'block';
+      errorEl.style.display = 'none';
+      submitBtn.disabled = false;
+      emailInput.value = '';
+    });
+
+    window.handleNewsletterSubmit = function () {
+      // Reset messages
+      statusEl.style.display = 'none';
+      errorEl.style.display = 'none';
+
+      // Basic client-side validation
+      if (!emailInput.value || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailInput.value)) {
+        errorEl.textContent = 'Introduce un correo válido.';
+        errorEl.style.display = 'block';
+        return false; // prevent submit
+      }
+
+      // Disable submit and show a pending state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+
+      // Start a timeout: if iframe doesn't load within 8s, show error
+      timeoutId = setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Suscríbete';
+        errorEl.textContent = 'No se pudo completar el registro. Intenta nuevamente.';
+        errorEl.style.display = 'block';
+      }, 8000);
+
+      // Let the form submit to the hidden iframe
+      // Show a temporary thanks message immediately for UX
+      statusEl.style.display = 'block';
+      errorEl.style.display = 'none';
+      statusEl.textContent = 'Gracias. Procesando tu registro...';
+
+      // After a short delay, restore button text (final state will be set on iframe load)
+      setTimeout(() => { submitBtn.textContent = 'Suscríbete'; }, 2000);
+
+      return true; // allow normal form submit to iframe
+    };
+  })();
+</script>
