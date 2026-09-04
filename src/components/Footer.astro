@@ -14,11 +14,13 @@ const currentYear = new Date().getFullYear();
           Los socios UCM tienen actualizaciones de promociones, servicios y
           eventos exclusivos de UCM. ¡Únete a nuestro Newsletter!
         </p>
-        <form class="flex mt-8 w-full" onsubmit="return false;">
+        <form class="flex mt-8 w-full" action="https://docs.google.com/forms/d/e/1FAIpQLSecFNR_7J2gtH4We4QZj63SzuXeXMWLyNgXlN73IbWVyHI7Cg/formResponse" method="POST" target="_blank">
           <input
+            name="entry.1234373129"
             type="email"
             placeholder="Tu correo electrónico"
             class="px-4 py-2 bg-black/6 border border-none rounded-l-lg text-black/70 text-xs focus:outline-none w-[70%]"
+            required
           />
           <button
             type="submit"
@@ -34,21 +36,24 @@ const currentYear = new Date().getFullYear();
       <div>
         <p class="text-sm font-[500] mb-4 tracking-tight">Compañia</p>
         <ul class="space-y-2 list-none p-0">
-          {
-            [
-              { label: "Términos y Condiciones", href: "/" },
-              { label: "Aviso de Privacidad", href: "/" },
-            ].map((link) => (
-              <li>
-                <a
-                  href={link.href}
-                  class="text-xs text-black/70 hover:text-black/50 transition-colors duration-300 ease-in-out"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))
-          }
+          <li style="display:none;">
+            <a
+              href="/"
+              class="text-xs text-black/70 hover:text-black/50 transition-colors duration-300 ease-in-out"
+            >
+              Términos y Condiciones
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://drive.google.com/file/d/1dg66SaMocNXf9C6isKGay_tCQM3KeTrA/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-xs text-black/70 hover:text-black/50 transition-colors duration-300 ease-in-out"
+            >
+              Aviso de Privacidad
+            </a>
+          </li>
         </ul>
       </div>
 
@@ -81,21 +86,23 @@ const currentYear = new Date().getFullYear();
       <div>
         <p class="text-sm font-[500] mb-4 tracking-tight">Recursos</p>
         <ul class="space-y-2 list-none p-0">
-          {
-            [
-              { label: "Documentación", href: "#" },
-              { label: "Contáctanos", href: "#" },
-            ].map((link) => (
-              <li>
-                <a
-                  href={link.href}
-                  class="text-xs text-black/70 hover:text-black/50 transition-colors duration-300 ease-in-out"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))
-          }
+          <li>
+            <a
+              href="/legales"
+              class="text-xs text-black/70 hover:text-black/50 transition-colors duration-300 ease-in-out"
+            >
+              Documentación
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              data-open-modal="modal-asesoria-personal"
+              class="text-xs text-black/70 hover:text-black/50 transition-colors duration-300 ease-in-out"
+            >
+              Contáctanos
+            </a>
+          </li>
         </ul>
       </div>
     </div>
