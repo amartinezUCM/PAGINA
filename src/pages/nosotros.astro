@@ -8,7 +8,7 @@ import ChevronRightIcon from "@heroicons/react/20/solid/ChevronRightIcon";
 
 <Layout
   title="Nosotros — UCM Unión de Crédito Mexicano"
-  description="Más de 31 años respaldando el patrimonio de familias mexicanas. Conoce nuestra historia, misión, valores y equipo directivo."
+  description="Más de 32 años respaldando el patrimonio de familias mexicanas. Conoce nuestra historia, misión, valores y equipo directivo."
 >
   <PageHero
     title="Detrás de cada inversión hay una historia que"
@@ -163,164 +163,157 @@ import ChevronRightIcon from "@heroicons/react/20/solid/ChevronRightIcon";
           </p>
         </div>
       </div>
-    </div>
 
-    <div id="video" class="py-20">
-      <div class="container-ucm">
-        <div class="bg-[#0A0B1E] w-full h-screen max-h-[680px]"></div>
-      </div>
-      <div class="container mx-auto max-w-[800px] text-center py-12 sm:px-8">
-        <h2
-          class="font-medium text-[clamp(1.8rem,3.5vw,2.90rem)] text-[#0A0B1E] tracking-tighter leading-none mb-8"
-        >
-          Unidos contigo,
-          <span class="serif-italic text-[clamp(2.1rem,4vw,3.5rem)]"
-            >unidos con
-          </span>{" "}
-          México
-        </h2>
-        <div
-          class="max-w-[800px] mx-auto md:mx-0 text-[clamp(0.9rem,2vw,1.1rem)]"
-        >
-          <p>
-            Seguimos evolucionando para ofrecer soluciones financieras más
-            accesibles, cercanas y alineadas con las necesidades de quienes
-            confían en nosotros.
-          </p>
-          <p>
-            Nuestro equipo está listo para acompañarte y ayudarte a encontrar la
-            mejor opción para ti o tu empresa.
-          </p>
-          <div class="w-[240px] mx-auto my-8">
-            <a
-              class="btn-primary text-center w-full flex items-center justify-center gap-2"
-              href="/"
-            >
-              <span class="w-full">Quiero ser socio</span>
-              <ChevronRightIcon width={18} height={18} />
-            </a>
+      <div id="video" class="py-20">
+        <div class="container-ucm">
+          <!-- removed empty placeholder box per request -->
+        </div>
+        <div class="container mx-auto max-w-[800px] text-center py-12 sm:px-8">
+          <h2
+            class="font-medium text-[clamp(1.8rem,3.5vw,2.90rem)] text-[#0A0B1E] tracking-tighter leading-none mb-8"
+          >
+            Unidos contigo,
+            <span class="serif-italic text-[clamp(2.1rem,4vw,3.5rem)]"
+              >unidos con
+            </span>{" "}
+            México
+          </h2>
+          <div
+            class="max-w-[800px] mx-auto md:mx-0 text-[clamp(0.9rem,2vw,1.1rem)]"
+          >
+            <p>
+              Seguimos evolucionando para ofrecer soluciones financieras más
+              accesibles, cercanas y alineadas con las necesidades de quienes
+              confían en nosotros.
+            </p>
+            <p>
+              Nuestro equipo está listo para acompañarte y ayudarte a encontrar la
+              mejor opción para ti o tu empresa.
+            </p>
+            <div class="w-[240px] mx-auto my-8">
+              <a
+                class="btn-primary text-center w-full flex items-center justify-center gap-2"
+                href="/"
+              >
+                <span class="w-full">Quiero ser socio</span>
+                <ChevronRightIcon width={18} height={18} />
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
 
-  <CTABanner />
-</Layout>
+    <CTABanner />
+  </Layout>
 
-<script>
-  const revealEls = document.querySelectorAll<HTMLElement>(
-    ".reveal-up, .reveal-left, .reveal-right",
-  );
-
-  revealEls.forEach((el) => {
-    const isLeft = el.classList.contains("reveal-left");
-    const isRight = el.classList.contains("reveal-right");
-    el.style.opacity = "0";
-    el.style.transform = isLeft
-      ? "translateX(-30px)"
-      : isRight
-        ? "translateX(30px)"
-        : "translateY(24px)";
-    el.style.transition = "opacity 0.7s ease, transform 0.7s ease";
-
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          const delay = el.style.animationDelay || "0s";
-          setTimeout(
-            () => {
-              el.style.opacity = "1";
-              el.style.transform = "translate(0)";
-            },
-            parseFloat(delay) * 1000,
-          );
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.12 },
+  <script>
+    const revealEls = document.querySelectorAll<HTMLElement>(
+      ".reveal-up, .reveal-left, .reveal-right",
     );
-    obs.observe(el);
-  });
-</script>
 
-<script>
-  import { animate } from "motion";
-
-  const filosofia = document.getElementById("filosofia");
-  const img1 = document.getElementById("filosofia-img-1");
-  const img2 = document.getElementById("filosofia-img-2");
-  const img3 = document.getElementById("filosofia-img-3");
-
-  if (filosofia && img1 && img2 && img3) {
-    // img-1 lives on the left, the img-2/img-3 column on the right. Each one's
-    // "edge" state is pushed out to its screen side, scaled down to 20%.
-    const targets: [HTMLElement, string][] = [
-      [img1, "-65vw"], // left edge
-      [img2, "65vw"], // right edge
-      [img3, "65vw"], // right edge
-    ];
-    const EDGE = (x: string) => `translateX(${x}) scale(0.2)`;
-    const CENTER = "translateX(0vw) scale(1)";
-    const opts = { duration: 1.1, ease: [0.22, 1, 0.36, 1] as const };
-
-    // Start in the edge state (no flash before the first reveal).
-    for (const [el, x] of targets) {
-      el.style.transformOrigin = "center center";
-      el.style.transform = EDGE(x);
+    revealEls.forEach((el) => {
+      const isLeft = el.classList.contains("reveal-left");
+      const isRight = el.classList.contains("reveal-right");
       el.style.opacity = "0";
-      el.style.willChange = "transform, opacity";
+      el.style.transform = isLeft
+        ? "translateX(-30px)"
+        : isRight
+          ? "translateX(30px)"
+          : "translateY(24px)";
+      el.style.transition = "opacity 0.7s ease, transform 0.7s ease";
+
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            const delay = el.style.animationDelay || "0s";
+            setTimeout(
+              () => {
+                el.style.opacity = "1";
+                el.style.transform = "translate(0)";
+              },
+              parseFloat(delay) * 1000,
+            );
+            obs.disconnect();
+          }
+        },
+        { threshold: 0.12 },
+      );
+      obs.observe(el);
+    });
+  </script>
+
+  <script>
+    import { animate } from "motion";
+
+    const filosofia = document.getElementById("filosofia");
+    const img1 = document.getElementById("filosofia-img-1");
+    const img2 = document.getElementById("filosofia-img-2");
+    const img3 = document.getElementById("filosofia-img-3");
+
+    if (filosofia && img1 && img2 && img3) {
+      // img-1 lives on the left, the img-2/img-3 column on the right. Each one's
+      // "edge" state is pushed out to its screen side, scaled down to 20%.
+      const targets: [HTMLElement, string][] = [
+        [img1, "-65vw"], // left edge
+        [img2, "65vw"], // right edge
+        [img3, "65vw"], // right edge
+      ];
+      const EDGE = (x: string) => `translateX(${x}) scale(0.2)`;
+      const CENTER = "translateX(0vw) scale(1)";
+      const opts = { duration: 1.1, ease: [0.22, 1, 0.36, 1] as const };
+
+      // Start in the edge state (no flash before the first reveal).
+      for (const [el, x] of targets) {
+        el.style.transformOrigin = "center center";
+        el.style.transform = EDGE(x);
+        el.style.opacity = "0";
+        el.style.willChange = "transform, opacity";
+      }
+
+      const playIn = () =>
+        targets.forEach(([el, x], i) =>
+          animate(
+            el,
+            { transform: [EDGE(x), CENTER], opacity: [0, 1] },
+            { ...opts, delay: i * 0.12 },
+          ),
+        );
+      const playOut = () =>
+        targets.forEach(([el, x], i) =>
+          animate(
+            el,
+            { transform: [CENTER, EDGE(x)], opacity: [1, 0] },
+            { ...opts, delay: i * 0.12 },
+          ),
+        );
+
+      let lastY = window.scrollY;
+      let dir: "up" | "down" = "down";
+      window.addEventListener(
+        "scroll",
+        () => {
+          const y = window.scrollY;
+          if (y !== lastY) {
+            dir = y > lastY ? "down" : "up";
+            lastY = y;
+          }
+        },
+        { passive: true },
+      );
+
+      let last: "in" | "out" | null = null;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) return;
+          const want = dir === "down" ? "in" : "out";
+          if (want === last) return;
+          last = want;
+          if (want === "in") playIn();
+          else playOut();
+        },
+        { threshold: 0.3 },
+      );
+      obs.observe(filosofia);
     }
-
-    // Entering by scrolling DOWN → images approach: scale 20% → 100%, edges →
-    // centre, fading in. Entering by scrolling UP → images recede: scale 100% →
-    // 20%, centre → edges, fading out.
-    const playIn = () =>
-      targets.forEach(([el, x], i) =>
-        animate(
-          el,
-          { transform: [EDGE(x), CENTER], opacity: [0, 1] },
-          { ...opts, delay: i * 0.12 },
-        ),
-      );
-    const playOut = () =>
-      targets.forEach(([el, x], i) =>
-        animate(
-          el,
-          { transform: [CENTER, EDGE(x)], opacity: [1, 0] },
-          { ...opts, delay: i * 0.12 },
-        ),
-      );
-
-    // Track scroll direction.
-    let lastY = window.scrollY;
-    let dir: "up" | "down" = "down";
-    window.addEventListener(
-      "scroll",
-      () => {
-        const y = window.scrollY;
-        if (y !== lastY) {
-          dir = y > lastY ? "down" : "up";
-          lastY = y;
-        }
-      },
-      { passive: true },
-    );
-
-    // Fire the matching animation on entry; don't replay the same direction
-    // twice in a row.
-    let last: "in" | "out" | null = null;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        const want = dir === "down" ? "in" : "out";
-        if (want === last) return;
-        last = want;
-        if (want === "in") playIn();
-        else playOut();
-      },
-      { threshold: 0.3 },
-    );
-    obs.observe(filosofia);
-  }
-</script>
+  </script>

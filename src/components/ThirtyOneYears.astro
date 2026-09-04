@@ -30,11 +30,7 @@ const TEXT = [
 ];
 ---
 
-<!-- Desktop: tall track whose height defines the scrubbed scroll distance.
-     Mobile: height comes from the in-flow sticky cards (≈ one viewport each). -->
 <section id="ty-section" class="relative w-full md:h-[350vh]">
-  <!-- Desktop: sticky stage pinned while the track scrolls past.
-       Mobile: a plain block so the cards can sticky-stack inside it. -->
   <div
     class="ty-stage relative w-full overflow-visible md:sticky md:top-0 md:h-screen md:overflow-hidden"
   >
@@ -53,7 +49,7 @@ const TEXT = [
                 class={`serif-italic font-black text-[${t.color}]`}
                 style="font-size:clamp(2.8rem,6.5vw,4.75rem);"
               >
-                31 años
+                32 años
               </span>
               {t.headline}
             </h2>
@@ -87,23 +83,17 @@ const TEXT = [
   if (section && cards.every(Boolean)) {
     const [card1, card2, card3] = cards as HTMLElement[];
 
-    // --- math helpers -----------------------------------------------------
-    // Map global scroll progress `p` into a 0..1 value over the [a,b] window,
-    // clamped at both ends so each card only reacts inside its own segment.
     const seg = (p: number, a: number, b: number) =>
       Math.min(1, Math.max(0, (p - a) / (b - a)));
     const lerp = (from: number, to: number, t: number) =>
       from + (to - from) * t;
-    // Cubic ease-out so movement feels weighted, not linear.
     const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
-    // --- per-card content (headline + body) -------------------------------
     const parts = cards.map((card) => ({
       headline: card!.querySelector<HTMLElement>(".ty-headline"),
       body: card!.querySelector<HTMLElement>(".ty-body"),
     }));
 
-    // Reveal the text of a card scrubbed by `t` (0 hidden → 1 fully shown).
     function revealContent(index: number, t: number) {
       const e = ease(t);
       const { headline, body } = parts[index];
@@ -118,40 +108,27 @@ const TEXT = [
       }
     }
 
-    // Resting offsets (in % of each card's own height). Equal card heights
-    // mean a card resting at 10% leaves the top 10% of the card below it
-    // visible — so card 2 covers 90% of card 1, card 3 covers 90% of card 2.
-    const OFFSCREEN = 108; // fully below the stage
+    const OFFSCREEN = 108;
     const REST_2 = 10;
     const REST_3 = 20;
 
-    // The whole thing is a pure function of scroll progress: scrolling up
-    // reverses it, stopping scroll freezes it. No timers, no triggers.
     function render(p: number) {
-      // Card 1 — rises into place as the section enters.
       const t1 = ease(seg(p, 0, 0.18));
       card1.style.transform = `translateY(${lerp(22, 0, t1)}%) scale(${lerp(0.96, 1, t1)})`;
       revealContent(0, seg(p, 0.06, 0.2));
 
-      // Card 2 — slides up from below to cover 90% of card 1.
       const t2 = ease(seg(p, 0.22, 0.5));
       card2.style.transform = `translateY(${lerp(OFFSCREEN, REST_2, t2)}%)`;
       revealContent(1, seg(p, 0.4, 0.54));
 
-      // Card 3 — slides up from below to cover 90% of card 2.
       const t3 = ease(seg(p, 0.55, 0.85));
       card3.style.transform = `translateY(${lerp(OFFSCREEN, REST_3, t3)}%)`;
       revealContent(2, seg(p, 0.72, 0.9));
     }
 
-    // Desktop runs the Motion scroll-scrub. On mobile we skip it entirely and
-    // let the CSS sticky-stack take over (each card pins at the top as you
-    // scroll, the next sliding up over it), with the text statically visible.
     const mq = window.matchMedia("(min-width: 768px)");
     let stop: VoidFunction | null = null;
 
-    // Remove any JS-set inline styles so CSS (sticky position + default
-    // visibility) fully controls the mobile layout.
     function clearInline() {
       cards.forEach((c) => (c!.style.transform = ""));
       parts.forEach(({ headline, body }) => {
@@ -171,7 +148,7 @@ const TEXT = [
       }
       clearInline();
       if (mq.matches) {
-        render(0); // paint the start state before any scroll happens
+        render(0);
         stop = scroll(render, {
           target: section!,
           offset: ["start start", "end end"],
@@ -180,6 +157,6 @@ const TEXT = [
     }
 
     apply();
-    mq.addEventListener("change", apply); // re-evaluate when crossing the breakpoint
+    mq.addEventListener("change", apply);
   }
 </script>
