@@ -3,7 +3,7 @@ interface Props {
   videoSrc?: string;
   imageSrc?: string;
 }
-const { videoSrc, imageSrc = "/img/hero.webp" } = Astro.props;
+const { videoSrc, imageSrc = "/img/hero-soluciones.webp" } = Astro.props;
 ---
 
 <section
@@ -73,7 +73,8 @@ const { videoSrc, imageSrc = "/img/hero.webp" } = Astro.props;
         </div>
       </div>
     </div>
-    <div class="absolute bottom-0 mx-32 my-20">
+    <!-- Texto ocultado temporalmente (preservado en el código) -->
+    <div class="absolute bottom-0 mx-32 my-20" style="display:none;">
       <p class="text-white text-sm font-medium">OSWALDO SÁNCHEZ</p>
       <p class="text-white text-sm font-medium">EX JUGADOR DE FÚTBOL</p>
     </div>
