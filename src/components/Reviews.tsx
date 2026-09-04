@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 const reviews = [
   {
     name: 'María González',
@@ -10,7 +12,7 @@ const reviews = [
   {
     name: 'Carlos Rodríguez',
     location: 'Monterrey, N.L.',
-    stars: 5,
+    stars: 4.5,
     text: 'Llevo 5 años siendo socio y cada año me sorprenden con mejores rendimientos. Sin duda es la mejor decisión financiera que he tomado para mi familia.',
     initials: 'CR',
     color: '#CEA24A',
@@ -18,7 +20,7 @@ const reviews = [
   {
     name: 'Ana López',
     location: 'Guadalajara, Jal.',
-    stars: 5,
+    stars: 4,
     text: 'La transparencia de UCM es lo que más me convence. Siempre sé exactamente dónde está mi dinero y cómo está creciendo. ¡Excelente institución!',
     initials: 'AL',
     color: '#2D5986',
@@ -34,7 +36,7 @@ const reviews = [
   {
     name: 'Sofía Hernández',
     location: 'Querétaro, Qro.',
-    stars: 5,
+    stars: 4,
     text: 'Diversifiqué mis inversiones gracias a los expertos de UCM y los resultados hablan por sí solos. Mi patrimonio ha crecido más de lo que esperaba.',
     initials: 'SH',
     color: '#980025',
@@ -42,7 +44,7 @@ const reviews = [
   {
     name: 'Miguel Torres',
     location: 'Ciudad de México',
-    stars: 5,
+    stars: 4.5,
     text: 'Como empresario, confío en UCM para administrar el capital de mi empresa con total transparencia. Es una relación de largo plazo que recomiendo a todos.',
     initials: 'MT',
     color: '#CEA24A',
@@ -57,14 +59,49 @@ const reviews = [
   },
 ];
 
-function StarRating({ count }: { count: number }) {
+function StarRating({ value }: { value: number }) {
+  const uid = useMemo(() => Math.random().toString(36).slice(2), []);
+  const full = Math.floor(value);
+  const hasHalf = value - full >= 0.5;
+
+  const path = "M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z";
+
   return (
     <div style={{ display: 'flex', gap: '2px', marginBottom: '0.75rem' }}>
-      {Array.from({ length: count }).map((_, i) => (
-        <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="#CEA24A">
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-        </svg>
-      ))}
+      {Array.from({ length: 5 }).map((_, i) => {
+        const key = `${uid}-${i}`;
+        if (i < full) {
+          return (
+            <svg key={key} width="14" height="14" viewBox="0 0 24 24" fill="#CEA24A" aria-hidden>
+              <path d={path} />
+            </svg>
+          );
+        }
+
+        if (i === full && hasHalf) {
+          const clipId = `clip-${uid}-${i}`;
+          return (
+            <svg key={key} width="14" height="14" viewBox="0 0 24 24" aria-hidden>
+              <defs>
+                <clipPath id={clipId}>
+                  <rect x="0" y="0" width="12" height="24" />
+                </clipPath>
+              </defs>
+              {/* filled left half */}
+              <path d={path} fill="#CEA24A" clipPath={`url(#${clipId})`} />
+              {/* outline */}
+              <path d={path} fill="none" stroke="#CEA24A" strokeWidth="0.9" />
+            </svg>
+          );
+        }
+
+        // empty star (outline)
+        return (
+          <svg key={key} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#CEA24A" strokeWidth="0.9" aria-hidden>
+            <path d={path} />
+          </svg>
+        );
+      })}
     </div>
   );
 }
@@ -83,7 +120,7 @@ function ReviewCard({ review }: { review: typeof reviews[0] }) {
       flexDirection: 'column',
       gap: '0',
     }}>
-      <StarRating count={review.stars} />
+      <StarRating value={review.stars} />
       <p style={{
         fontFamily: "'Poppins', sans-serif", fontWeight: 300,
         fontSize: '0.875rem', color: '#0A0B1E',
@@ -128,7 +165,7 @@ export default function Reviews() {
           <span className='serif-italic text-[clamp(2.1rem,4vw,3.5rem)]'>
             Únete
           </span>{' '}
-          y tú también disfruta{' '}<br />
+          y tú también disfruta{' '}
           de los beneficios exclusivos
         </h2>
       </div>
